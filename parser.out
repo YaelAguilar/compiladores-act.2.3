@@ -1,0 +1,152 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> html
+Rule 1     html -> elements
+Rule 2     elements -> elements element
+Rule 3     elements -> element
+Rule 4     element -> TAG_OPEN elements TAG_CLOSE
+Rule 5     element -> TAG_SELF_CLOSE
+Rule 6     element -> TEXT
+
+Terminals, with rules where they appear
+
+TAG_CLOSE            : 4
+TAG_OPEN             : 4
+TAG_SELF_CLOSE       : 5
+TEXT                 : 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+element              : 2 3
+elements             : 1 2 4
+html                 : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . html
+    (1) html -> . elements
+    (2) elements -> . elements element
+    (3) elements -> . element
+    (4) element -> . TAG_OPEN elements TAG_CLOSE
+    (5) element -> . TAG_SELF_CLOSE
+    (6) element -> . TEXT
+
+    TAG_OPEN        shift and go to state 4
+    TAG_SELF_CLOSE  shift and go to state 5
+    TEXT            shift and go to state 6
+
+    html                           shift and go to state 1
+    elements                       shift and go to state 2
+    element                        shift and go to state 3
+
+state 1
+
+    (0) S' -> html .
+
+
+
+state 2
+
+    (1) html -> elements .
+    (2) elements -> elements . element
+    (4) element -> . TAG_OPEN elements TAG_CLOSE
+    (5) element -> . TAG_SELF_CLOSE
+    (6) element -> . TEXT
+
+    $end            reduce using rule 1 (html -> elements .)
+    TAG_OPEN        shift and go to state 4
+    TAG_SELF_CLOSE  shift and go to state 5
+    TEXT            shift and go to state 6
+
+    element                        shift and go to state 7
+
+state 3
+
+    (3) elements -> element .
+
+    TAG_OPEN        reduce using rule 3 (elements -> element .)
+    TAG_SELF_CLOSE  reduce using rule 3 (elements -> element .)
+    TEXT            reduce using rule 3 (elements -> element .)
+    $end            reduce using rule 3 (elements -> element .)
+    TAG_CLOSE       reduce using rule 3 (elements -> element .)
+
+
+state 4
+
+    (4) element -> TAG_OPEN . elements TAG_CLOSE
+    (2) elements -> . elements element
+    (3) elements -> . element
+    (4) element -> . TAG_OPEN elements TAG_CLOSE
+    (5) element -> . TAG_SELF_CLOSE
+    (6) element -> . TEXT
+
+    TAG_OPEN        shift and go to state 4
+    TAG_SELF_CLOSE  shift and go to state 5
+    TEXT            shift and go to state 6
+
+    elements                       shift and go to state 8
+    element                        shift and go to state 3
+
+state 5
+
+    (5) element -> TAG_SELF_CLOSE .
+
+    TAG_OPEN        reduce using rule 5 (element -> TAG_SELF_CLOSE .)
+    TAG_SELF_CLOSE  reduce using rule 5 (element -> TAG_SELF_CLOSE .)
+    TEXT            reduce using rule 5 (element -> TAG_SELF_CLOSE .)
+    $end            reduce using rule 5 (element -> TAG_SELF_CLOSE .)
+    TAG_CLOSE       reduce using rule 5 (element -> TAG_SELF_CLOSE .)
+
+
+state 6
+
+    (6) element -> TEXT .
+
+    TAG_OPEN        reduce using rule 6 (element -> TEXT .)
+    TAG_SELF_CLOSE  reduce using rule 6 (element -> TEXT .)
+    TEXT            reduce using rule 6 (element -> TEXT .)
+    $end            reduce using rule 6 (element -> TEXT .)
+    TAG_CLOSE       reduce using rule 6 (element -> TEXT .)
+
+
+state 7
+
+    (2) elements -> elements element .
+
+    TAG_OPEN        reduce using rule 2 (elements -> elements element .)
+    TAG_SELF_CLOSE  reduce using rule 2 (elements -> elements element .)
+    TEXT            reduce using rule 2 (elements -> elements element .)
+    $end            reduce using rule 2 (elements -> elements element .)
+    TAG_CLOSE       reduce using rule 2 (elements -> elements element .)
+
+
+state 8
+
+    (4) element -> TAG_OPEN elements . TAG_CLOSE
+    (2) elements -> elements . element
+    (4) element -> . TAG_OPEN elements TAG_CLOSE
+    (5) element -> . TAG_SELF_CLOSE
+    (6) element -> . TEXT
+
+    TAG_CLOSE       shift and go to state 9
+    TAG_OPEN        shift and go to state 4
+    TAG_SELF_CLOSE  shift and go to state 5
+    TEXT            shift and go to state 6
+
+    element                        shift and go to state 7
+
+state 9
+
+    (4) element -> TAG_OPEN elements TAG_CLOSE .
+
+    TAG_OPEN        reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
+    TAG_SELF_CLOSE  reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
+    TEXT            reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
+    $end            reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
+    TAG_CLOSE       reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
+

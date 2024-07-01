@@ -2,151 +2,253 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> html
-Rule 1     html -> elements
-Rule 2     elements -> elements element
-Rule 3     elements -> element
-Rule 4     element -> TAG_OPEN elements TAG_CLOSE
-Rule 5     element -> TAG_SELF_CLOSE
-Rule 6     element -> TEXT
+Rule 0     S' -> program
+Rule 1     program -> declaration for_statement
+Rule 2     declaration -> INT ID SEMI
+Rule 3     for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
+Rule 4     statement -> OUT DOT PRINTLN LPAREN ID RPAREN SEMI
 
 Terminals, with rules where they appear
 
-TAG_CLOSE            : 4
-TAG_OPEN             : 4
-TAG_SELF_CLOSE       : 5
-TEXT                 : 6
+ASSIGN               : 3
+DOT                  : 4
+FOR                  : 3
+ID                   : 2 3 3 3 4
+INT                  : 2
+LBRACE               : 3
+LE                   : 3
+LPAREN               : 3 4
+NUMBER               : 3 3
+OUT                  : 4
+PLUS                 : 3
+PRINTLN              : 4
+RBRACE               : 3
+RPAREN               : 3 4
+SEMI                 : 2 3 3 4
 error                : 
 
 Nonterminals, with rules where they appear
 
-element              : 2 3
-elements             : 1 2 4
-html                 : 0
+declaration          : 1
+for_statement        : 1
+program              : 0
+statement            : 3
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . html
-    (1) html -> . elements
-    (2) elements -> . elements element
-    (3) elements -> . element
-    (4) element -> . TAG_OPEN elements TAG_CLOSE
-    (5) element -> . TAG_SELF_CLOSE
-    (6) element -> . TEXT
+    (0) S' -> . program
+    (1) program -> . declaration for_statement
+    (2) declaration -> . INT ID SEMI
 
-    TAG_OPEN        shift and go to state 4
-    TAG_SELF_CLOSE  shift and go to state 5
-    TEXT            shift and go to state 6
+    INT             shift and go to state 3
 
-    html                           shift and go to state 1
-    elements                       shift and go to state 2
-    element                        shift and go to state 3
+    program                        shift and go to state 1
+    declaration                    shift and go to state 2
 
 state 1
 
-    (0) S' -> html .
+    (0) S' -> program .
 
 
 
 state 2
 
-    (1) html -> elements .
-    (2) elements -> elements . element
-    (4) element -> . TAG_OPEN elements TAG_CLOSE
-    (5) element -> . TAG_SELF_CLOSE
-    (6) element -> . TEXT
+    (1) program -> declaration . for_statement
+    (3) for_statement -> . FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
 
-    $end            reduce using rule 1 (html -> elements .)
-    TAG_OPEN        shift and go to state 4
-    TAG_SELF_CLOSE  shift and go to state 5
-    TEXT            shift and go to state 6
+    FOR             shift and go to state 5
 
-    element                        shift and go to state 7
+    for_statement                  shift and go to state 4
 
 state 3
 
-    (3) elements -> element .
+    (2) declaration -> INT . ID SEMI
 
-    TAG_OPEN        reduce using rule 3 (elements -> element .)
-    TAG_SELF_CLOSE  reduce using rule 3 (elements -> element .)
-    TEXT            reduce using rule 3 (elements -> element .)
-    $end            reduce using rule 3 (elements -> element .)
-    TAG_CLOSE       reduce using rule 3 (elements -> element .)
+    ID              shift and go to state 6
 
 
 state 4
 
-    (4) element -> TAG_OPEN . elements TAG_CLOSE
-    (2) elements -> . elements element
-    (3) elements -> . element
-    (4) element -> . TAG_OPEN elements TAG_CLOSE
-    (5) element -> . TAG_SELF_CLOSE
-    (6) element -> . TEXT
+    (1) program -> declaration for_statement .
 
-    TAG_OPEN        shift and go to state 4
-    TAG_SELF_CLOSE  shift and go to state 5
-    TEXT            shift and go to state 6
+    $end            reduce using rule 1 (program -> declaration for_statement .)
 
-    elements                       shift and go to state 8
-    element                        shift and go to state 3
 
 state 5
 
-    (5) element -> TAG_SELF_CLOSE .
+    (3) for_statement -> FOR . LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
 
-    TAG_OPEN        reduce using rule 5 (element -> TAG_SELF_CLOSE .)
-    TAG_SELF_CLOSE  reduce using rule 5 (element -> TAG_SELF_CLOSE .)
-    TEXT            reduce using rule 5 (element -> TAG_SELF_CLOSE .)
-    $end            reduce using rule 5 (element -> TAG_SELF_CLOSE .)
-    TAG_CLOSE       reduce using rule 5 (element -> TAG_SELF_CLOSE .)
+    LPAREN          shift and go to state 7
 
 
 state 6
 
-    (6) element -> TEXT .
+    (2) declaration -> INT ID . SEMI
 
-    TAG_OPEN        reduce using rule 6 (element -> TEXT .)
-    TAG_SELF_CLOSE  reduce using rule 6 (element -> TEXT .)
-    TEXT            reduce using rule 6 (element -> TEXT .)
-    $end            reduce using rule 6 (element -> TEXT .)
-    TAG_CLOSE       reduce using rule 6 (element -> TEXT .)
+    SEMI            shift and go to state 8
 
 
 state 7
 
-    (2) elements -> elements element .
+    (3) for_statement -> FOR LPAREN . ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
 
-    TAG_OPEN        reduce using rule 2 (elements -> elements element .)
-    TAG_SELF_CLOSE  reduce using rule 2 (elements -> elements element .)
-    TEXT            reduce using rule 2 (elements -> elements element .)
-    $end            reduce using rule 2 (elements -> elements element .)
-    TAG_CLOSE       reduce using rule 2 (elements -> elements element .)
+    ID              shift and go to state 9
 
 
 state 8
 
-    (4) element -> TAG_OPEN elements . TAG_CLOSE
-    (2) elements -> elements . element
-    (4) element -> . TAG_OPEN elements TAG_CLOSE
-    (5) element -> . TAG_SELF_CLOSE
-    (6) element -> . TEXT
+    (2) declaration -> INT ID SEMI .
 
-    TAG_CLOSE       shift and go to state 9
-    TAG_OPEN        shift and go to state 4
-    TAG_SELF_CLOSE  shift and go to state 5
-    TEXT            shift and go to state 6
+    FOR             reduce using rule 2 (declaration -> INT ID SEMI .)
 
-    element                        shift and go to state 7
 
 state 9
 
-    (4) element -> TAG_OPEN elements TAG_CLOSE .
+    (3) for_statement -> FOR LPAREN ID . ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
 
-    TAG_OPEN        reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
-    TAG_SELF_CLOSE  reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
-    TEXT            reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
-    $end            reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
-    TAG_CLOSE       reduce using rule 4 (element -> TAG_OPEN elements TAG_CLOSE .)
+    ASSIGN          shift and go to state 10
+
+
+state 10
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN . NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
+
+    NUMBER          shift and go to state 11
+
+
+state 11
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER . SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
+
+    SEMI            shift and go to state 12
+
+
+state 12
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI . ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
+
+    ID              shift and go to state 13
+
+
+state 13
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID . LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
+
+    LE              shift and go to state 14
+
+
+state 14
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE . NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE
+
+    NUMBER          shift and go to state 15
+
+
+state 15
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER . SEMI ID PLUS RPAREN LBRACE statement RBRACE
+
+    SEMI            shift and go to state 16
+
+
+state 16
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI . ID PLUS RPAREN LBRACE statement RBRACE
+
+    ID              shift and go to state 17
+
+
+state 17
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID . PLUS RPAREN LBRACE statement RBRACE
+
+    PLUS            shift and go to state 18
+
+
+state 18
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS . RPAREN LBRACE statement RBRACE
+
+    RPAREN          shift and go to state 19
+
+
+state 19
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN . LBRACE statement RBRACE
+
+    LBRACE          shift and go to state 20
+
+
+state 20
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE . statement RBRACE
+    (4) statement -> . OUT DOT PRINTLN LPAREN ID RPAREN SEMI
+
+    OUT             shift and go to state 22
+
+    statement                      shift and go to state 21
+
+state 21
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement . RBRACE
+
+    RBRACE          shift and go to state 23
+
+
+state 22
+
+    (4) statement -> OUT . DOT PRINTLN LPAREN ID RPAREN SEMI
+
+    DOT             shift and go to state 24
+
+
+state 23
+
+    (3) for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE .
+
+    $end            reduce using rule 3 (for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE .)
+
+
+state 24
+
+    (4) statement -> OUT DOT . PRINTLN LPAREN ID RPAREN SEMI
+
+    PRINTLN         shift and go to state 25
+
+
+state 25
+
+    (4) statement -> OUT DOT PRINTLN . LPAREN ID RPAREN SEMI
+
+    LPAREN          shift and go to state 26
+
+
+state 26
+
+    (4) statement -> OUT DOT PRINTLN LPAREN . ID RPAREN SEMI
+
+    ID              shift and go to state 27
+
+
+state 27
+
+    (4) statement -> OUT DOT PRINTLN LPAREN ID . RPAREN SEMI
+
+    RPAREN          shift and go to state 28
+
+
+state 28
+
+    (4) statement -> OUT DOT PRINTLN LPAREN ID RPAREN . SEMI
+
+    SEMI            shift and go to state 29
+
+
+state 29
+
+    (4) statement -> OUT DOT PRINTLN LPAREN ID RPAREN SEMI .
+
+    RBRACE          reduce using rule 4 (statement -> OUT DOT PRINTLN LPAREN ID RPAREN SEMI .)
 

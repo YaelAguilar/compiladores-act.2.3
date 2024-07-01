@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'TAG_CLOSE TAG_OPEN TAG_SELF_CLOSE TEXThtml : elementselements : elements element\n                | elementelement : TAG_OPEN elements TAG_CLOSE\n               | TAG_SELF_CLOSE\n               | TEXT'
+_lr_signature = 'ASSIGN DOT FOR ID INT LBRACE LE LPAREN NUMBER OUT PLUS PRINTLN RBRACE RPAREN SEMIprogram : declaration for_statementdeclaration : INT ID SEMIfor_statement : FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACEstatement : OUT DOT PRINTLN LPAREN ID RPAREN SEMI'
     
-_lr_action_items = {'TAG_OPEN':([0,2,3,4,5,6,7,8,9,],[4,4,-3,4,-5,-6,-2,4,-4,]),'TAG_SELF_CLOSE':([0,2,3,4,5,6,7,8,9,],[5,5,-3,5,-5,-6,-2,5,-4,]),'TEXT':([0,2,3,4,5,6,7,8,9,],[6,6,-3,6,-5,-6,-2,6,-4,]),'$end':([1,2,3,5,6,7,9,],[0,-1,-3,-5,-6,-2,-4,]),'TAG_CLOSE':([3,5,6,7,8,9,],[-3,-5,-6,-2,9,-4,]),}
+_lr_action_items = {'INT':([0,],[3,]),'$end':([1,4,23,],[0,-1,-3,]),'FOR':([2,8,],[5,-2,]),'ID':([3,7,12,16,26,],[6,9,13,17,27,]),'LPAREN':([5,25,],[7,26,]),'SEMI':([6,11,15,28,],[8,12,16,29,]),'ASSIGN':([9,],[10,]),'NUMBER':([10,14,],[11,15,]),'LE':([13,],[14,]),'PLUS':([17,],[18,]),'RPAREN':([18,27,],[19,28,]),'LBRACE':([19,],[20,]),'OUT':([20,],[22,]),'RBRACE':([21,29,],[23,-4,]),'DOT':([22,],[24,]),'PRINTLN':([24,],[25,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'html':([0,],[1,]),'elements':([0,4,],[2,8,]),'element':([0,2,4,8,],[3,7,3,7,]),}
+_lr_goto_items = {'program':([0,],[1,]),'declaration':([0,],[2,]),'for_statement':([2,],[4,]),'statement':([20,],[21,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,11 +26,9 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> html","S'",1,None,None,None),
-  ('html -> elements','html',1,'p_html','app.py',36),
-  ('elements -> elements element','elements',2,'p_elements','app.py',40),
-  ('elements -> element','elements',1,'p_elements','app.py',41),
-  ('element -> TAG_OPEN elements TAG_CLOSE','element',3,'p_element','app.py',45),
-  ('element -> TAG_SELF_CLOSE','element',1,'p_element','app.py',46),
-  ('element -> TEXT','element',1,'p_element','app.py',47),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> declaration for_statement','program',2,'p_program','app.py',51),
+  ('declaration -> INT ID SEMI','declaration',3,'p_declaration','app.py',55),
+  ('for_statement -> FOR LPAREN ID ASSIGN NUMBER SEMI ID LE NUMBER SEMI ID PLUS RPAREN LBRACE statement RBRACE','for_statement',16,'p_for_statement','app.py',60),
+  ('statement -> OUT DOT PRINTLN LPAREN ID RPAREN SEMI','statement',7,'p_statement','app.py',71),
 ]
